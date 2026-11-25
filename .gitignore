@@ -1,0 +1,11 @@
+__pycache__/
+
+.Python
+build/
+
+.env
+.venv
+env/
+venv/
+
+data/database.db*

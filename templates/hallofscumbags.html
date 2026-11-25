@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>РЕЙТИНГ ГЛАВНЫХ УЕБАНОВ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="top-block">
+            <h1>ТОП-{{ cnt }} ДЕГЕНЕРАТОВ КОТОРЫЕ РАЗРЫВАЮТ ОЧКО!!!!!</h1>
+
+            <div class="screenshots">
+                <img src="{{ url_for('static', filename='images/gg.jpg') }}">
+                <img src="{{ url_for('static', filename='images/ok.jpg') }}">
+            </div>
+
+            <ol class="scores">
+            {% for seller in sellers %}
+                <li class="card">
+                    <span class="card-num"></span>
+                    <strong class="card-name">{{ seller['nickname'] }}</strong>
+                    <span class="card-text">заебал нас {{ seller['score'] }} раз</span>
+                    <form class="card-form" method="post" action="{{ url_for('vote', seller_id=seller['id']) }}">
+                        <button type="submit">+1</button>
+                    </form>
+                </li>
+            {% else %}
+                <li>База учета уебищ пока пуста</li>
+            {% endfor %}
+            </ol>
+
+            <form method="post" action="{{ url_for('add_seller') }}" class="add-form">
+                <input type="text" name="nickname" placeholder="Никнейм" required>
+                <button type="submit">Добавить</button>
+            </form>
+        </div>
+
+        <div class="flash-block">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul class="flash-m">
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
+            {% endwith %}
+        </div>
+    </div>
+</body>
+</html>
